@@ -2,8 +2,14 @@ import React, { Component } from 'react'
 import './Keypad.scss';
 import Key from '../key/Key';
 import Config from '../../config/config';
+import { connect } from 'react-redux';
+import { testAction } from '../../actions/testAction';
+import PropTypes from 'prop-types';
 
-export default class Keypad extends Component {
+class Keypad extends Component {
+    componentWillMount() {
+        this.props.testAction();
+    }
     state = {
         keys: Config.keys
     }
@@ -17,3 +23,14 @@ export default class Keypad extends Component {
         )
     }
 }
+
+Keypad.propTypes = {
+    testAction: PropTypes.func.isRequired,
+    safe: PropTypes.array.isRequired
+}
+
+const mappStateToProps = state => ({
+    safe: state.safe.name
+})
+
+export default connect(mappStateToProps, { testAction })(Keypad);

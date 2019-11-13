@@ -8,6 +8,12 @@
     grid-template-columns: 1fr;
     padding: 1em;
     border-radius: 5px;
+    &.on {
+        background: $screen-back-on;
+    }
+    &.off {
+        background: $screen-back-off;
+    }
     &__lseg {
         text-align: left;
         padding-bottom: 3em;
