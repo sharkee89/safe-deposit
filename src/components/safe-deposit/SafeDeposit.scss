@@ -1,0 +1,17 @@
+@import '../../variables.scss';
+
+.safe-deposit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 25%;
+    margin: 0 auto;
+    background: $panel-body;
+    border-radius: 5px;
+    box-shadow: 0 0 10px $black;
+    .serial-number {
+        text-align: right;
+        padding: .5em;
+    }
+}

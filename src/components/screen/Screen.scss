@@ -1,0 +1,19 @@
+@import '../../variables.scss';
+
+.screen {
+    width: 68%;
+    margin: 1em auto;
+    background: $screen-back-off;
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 1em;
+    border-radius: 5px;
+    &__lseg {
+        text-align: left;
+        padding-bottom: 3em;
+    }
+    &__mseg {
+        text-align: right;
+        font-size: 3em;
+    }
+}

@@ -1,0 +1,13 @@
+@import '../../variables.scss';
+
+.key {
+    background-color: $button;
+    color: $button-text;
+    text-align: center;
+    align-self: center;
+    font-size: 3em;
+    border-radius: 5px;
+    border: 1px solid $black;
+    box-shadow: 0 0 2px $black;
+    cursor: pointer;
+}

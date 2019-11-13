@@ -1,0 +1,8 @@
+.keypad {
+    width: 65%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1em;
+    padding: 1em 0;
+}
