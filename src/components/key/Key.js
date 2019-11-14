@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { changeStatus } from '../../actions/screenAction';
-import Config from '../../config/config';
-
-import { Observable } from 'rxjs';
+import store from '../../store/store';
 
 import './Key.scss';
 
@@ -15,7 +13,7 @@ class Key extends Component {
         if (passValue.length > 6) {
 
         } else {
-            this.props.changeStatus(passValue);
+            store.dispatch({type: 'CHANGE_STATUS', payload: passValue});
         }
     }
     render() {

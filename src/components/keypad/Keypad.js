@@ -7,9 +7,6 @@ import { testAction } from '../../actions/testAction';
 import PropTypes from 'prop-types';
 
 class Keypad extends Component {
-    componentWillMount() {
-        this.props.testAction();
-    }
     state = {
         keys: Config.keys
     }
