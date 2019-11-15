@@ -8,10 +8,10 @@
     grid-template-columns: 1fr;
     padding: 1em;
     border-radius: 5px;
-    &.on {
+    &--on {
         background: $screen-back-on;
     }
-    &.off {
+    &--off {
         background: $screen-back-off;
     }
     &__lseg {

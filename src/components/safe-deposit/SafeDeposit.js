@@ -13,7 +13,7 @@ export default class SafeDeposit extends Component {
             <div className="safe-deposit">
                 <Screen />
                 <Keypad />
-                <div className="serial-number">
+                <div className="safe-deposit__serial-number">
                     S/N: {this.state.serialNumber}
                 </div> 
             </div>

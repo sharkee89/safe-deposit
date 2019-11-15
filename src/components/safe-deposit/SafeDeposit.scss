@@ -1,17 +1,37 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .safe-deposit {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 25%;
-    margin: 0 auto;
-    background: $panel-body;
-    border-radius: 5px;
-    box-shadow: 0 0 10px $black;
-    .serial-number {
-        text-align: right;
-        padding: .5em;
-    }
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25%;
+  margin: 0 auto;
+  background: $panel-body;
+  border-radius: 5px;
+  box-shadow: 0 0 10px $black;
+  &__serial-number {
+    text-align: right;
+    padding: 0.5em;
+  }
+}
+@media only screen and (max-width: 1776px) {
+  .safe-deposit {
+    width: 35%;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .safe-deposit {
+    width: 45%;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .safe-deposit {
+    width: 55%;
+  }
+}
+@media only screen and (max-width: 648px) {
+  .safe-deposit {
+    width: 90%;
+  }
 }

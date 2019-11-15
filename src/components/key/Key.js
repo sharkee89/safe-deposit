@@ -6,14 +6,16 @@ import store from '../../store/store';
 import './Key.scss';
 
 class Key extends Component {
-    
+
     changeStatus(value) {
         let passValue = isNaN(this.props.screen.status) ?
             value : this.props.screen.status += value.toString();
         if (passValue.length > 6) {
 
         } else {
-            store.dispatch({type: 'CHANGE_STATUS', payload: passValue});
+            store.dispatch({ type: 'STOP_BACKGROUND_SYNC' });
+            store.dispatch({ type: 'CHANGE_STATUS_ASYNC', payload: passValue });
+            store.dispatch({ type: 'START_IDLE_TIMING' });
         }
     }
     render() {

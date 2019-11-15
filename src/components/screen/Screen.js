@@ -5,7 +5,7 @@ import './Screen.scss';
 class Screen extends Component {
     render() {
         return (
-            <div className={(this.props.screen.on ? 'screen on' : 'screen off')}>
+            <div className={(this.props.screen.on ? 'screen screen--on' : 'screen screen--off')}>
                 <div className="screen__lseg">
                     {this.props.screen.locked}
                 </div>
@@ -21,4 +21,4 @@ const mappStateToProps = state => ({
     screen: state.screen
 })
 
-export default connect(mappStateToProps, { })(Screen);
+export default connect(mappStateToProps, {})(Screen);

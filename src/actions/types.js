@@ -3,3 +3,6 @@ export const TEST_ACTION = 'TEST_ACTION';
 export const GET_SCREEN_INIT = 'GET_SCREEN_INIT';
 export const CHANGE_STATUS = 'CHANGE_STATUS';
 export const CHANGE_STATUS_ASYNC = 'CHANGE_STATUS_ASYNC';
+export const START_IDLE_TIMING = 'START_IDLE_TIMING';
+export const GO_IDLE = 'GO_IDLE';
+export const RESET_SUBMIT_TIME = 'RESET_SUBMIT_TIME';
