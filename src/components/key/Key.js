@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { changeStatus } from '../../actions/screenAction';
 import store from '../../store/store';
-
 import './Key.scss';
 import Config from '../../config/config';
+import soundFile from '../../audio/button.mp3';
 
 class Key extends Component {
+
+    btnSound = new Audio(soundFile);
 
     changeStatus(value) {
         if (
@@ -15,6 +17,7 @@ class Key extends Component {
             this.props.screen.status !== Config.screenStatus.UNLOCK
         ) {
             if (value === 'L') {
+                this.btnSound.play();
                 store.dispatch({ type: 'START_LOCK_ASYNC', payload: this.props.screen.status });
                 store.dispatch({ type: 'STOP_BACKGROUND_SYNC' });
                 return;
@@ -24,6 +27,7 @@ class Key extends Component {
             if (passValue.length > 6) {
 
             } else {
+                this.btnSound.play();
                 store.dispatch({ type: 'STOP_BACKGROUND_SYNC' });
                 store.dispatch({ type: 'CHANGE_STATUS_ASYNC', payload: passValue });
                 store.dispatch({ type: 'START_IDLE_TIMING' });

@@ -1,6 +1,12 @@
-import { all, take, call, takeLatest, takeEvery, put, select, fork, cancel, cancelled } from 'redux-saga/effects';
+import { all, take, takeLatest, takeEvery, put, select, fork, cancel } from 'redux-saga/effects';
 import getScreenState from '../reducers/screenReducer';
 import Config from '../config/config';
+import lockSoundFile from '../audio/unlock.wav';
+import errSoundFile from '../audio/error.mp3';
+
+const lockSound = new Audio(lockSoundFile);
+const errorSound = new Audio(errSoundFile);
+
 const delay = (ms) => new Promise(res => setTimeout(res, ms))
 
 function* changeStatusAsync({ payload }) {
@@ -27,7 +33,6 @@ function* bgSync() {
             submitTime++;
             if (submitTime > 1 && state.screen.status.length === 6 &&
                 state.screen.locked !== Config.screenLocked.UNLOCK) {
-                console.log('Process input');
                 yield put({ type: 'RESET_SUBMIT_TIME' });
                 yield put({ type: 'PROCESS_INPUT_ASYNC' });
                 yield put({ type: 'STOP_BACKGROUND_SYNC' });
@@ -54,8 +59,10 @@ function* processInput() {
     yield delay(1500);
     const random = Math.round(Math.random());
     if (random === 1) {
+        lockSound.play();
         yield put({ type: 'UNLOCK_SUCCESS' });
     } else {
+        errorSound.play();
         yield put({ type: 'UNLOCK_FAIL' });
     }
 }
@@ -87,8 +94,10 @@ function* startLock({ payload }) {
     yield delay(1500);
     const random = Math.round(Math.random());
     if (random === 1) {
+        lockSound.play();
         yield put({ type: 'LOCK_SUCCESS' });
     } else {
+        errorSound.play();
         yield put({ type: 'LOCK_FAIL' });
     }
 }
