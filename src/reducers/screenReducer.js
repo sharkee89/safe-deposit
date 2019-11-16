@@ -10,7 +10,8 @@ import {
     UNLOCK_FAIL,
     LOCK_SUCCESS,
     LOCK_FAIL,
-    START_LOCK_ASYNC
+    START_LOCK_ASYNC,
+    START_SERVICE
 } from '../actions/types';
 import { statement } from '@babel/template';
 
@@ -19,6 +20,7 @@ const initialState = {
     status: Config.screenStatus.READY,
     on: false,
     progress: false,
+    serviceMode: false,
     idleTime: 0,
     submitTime: 0
 }
@@ -65,12 +67,14 @@ export default (state = initialState, action) => {
         case UNLOCK_SUCCESS:
             return {
                 ...state,
-                status: Config.screenStatus.UNLOCK
+                status: Config.screenStatus.UNLOCK,
+                serviceMode: false
             }
         case UNLOCK_FAIL:
             return {
                 ...state,
-                status: Config.screenStatus.ERROR
+                status: Config.screenStatus.ERROR,
+                serviceMode: false
             }
         case START_LOCK_ASYNC:
             return {
@@ -86,6 +90,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 status: Config.screenStatus.ERROR
+            }
+        case START_SERVICE:
+            return {
+                ...state,
+                status: Config.screenStatus.SERVICE,
+                serviceMode: true
             }
         default:
             return state;

@@ -1,4 +1,4 @@
-import { all, take, takeLatest, takeEvery, put, select, fork, cancel } from 'redux-saga/effects';
+import { all, call, cancel, fork, put, select, take, takeEvery, takeLatest } from 'redux-saga/effects';
 import getScreenState from '../reducers/screenReducer';
 import Config from '../config/config';
 import lockSoundFile from '../audio/unlock.wav';
@@ -32,17 +32,40 @@ function* bgSync() {
             }
             submitTime++;
             if (submitTime > 1 && state.screen.status.length === 6 &&
-                state.screen.locked !== Config.screenLocked.UNLOCK) {
+                state.screen.locked === Config.screenLocked.LOCK) {
                 yield put({ type: 'RESET_SUBMIT_TIME' });
-                yield put({ type: 'PROCESS_INPUT_ASYNC' });
+                yield put({ type: 'PROCESS_INPUT_ASYNC', payload: state.screen.status });
                 yield put({ type: 'STOP_BACKGROUND_SYNC' });
                 
+            }
+            if (submitTime > 1 && state.screen.serviceMode && state.screen.locked === Config.screenLocked.LOCK) {
+                yield put({ type: 'CHANGE_STATUS', payload: Config.screenStatus.VALIDATE });
+                yield put({ type: 'START_SERVICE_WORK', payload: state.screen.status });
+                yield put({ type: 'STOP_BACKGROUND_SYNC' });
             }
             yield delay(1000)
         }
     } finally {
         // if (yield cancelled())
     }
+}
+
+function* serviceWork({ payload }) {
+    yield delay(1500);
+    try {
+        const response = yield call(fetch, `${Config.serviceUrl}${payload}`);
+        const responseBody = response.json();
+        lockSound.play();
+        yield put({ type: 'UNLOCK_SUCCESS' });
+    } catch (e) {
+        errorSound.play();
+        yield put({ type: 'UNLOCK_FAIL' });
+        return;
+    }
+}
+
+function* watchStartServiceWork() {
+    yield takeEvery('START_SERVICE_WORK', serviceWork);
 }
 
 function* watchBgSyncTask() {
@@ -55,10 +78,13 @@ function* watchBgSyncTask() {
     }
 }
 
-function* processInput() {
+function* processInput({ payload }) {
     yield delay(1500);
-    const random = Math.round(Math.random());
-    if (random === 1) {
+    if (payload === Config.serviceCode) {
+        yield put({ type: 'START_SERVICE' });
+        return;
+    }
+    if (payload === Config.password) {
         lockSound.play();
         yield put({ type: 'UNLOCK_SUCCESS' });
     } else {
@@ -92,8 +118,12 @@ function* watchUnlockFail() {
 
 function* startLock({ payload }) {
     yield delay(1500);
-    const random = Math.round(Math.random());
-    if (random === 1) {
+    if (payload.length !== 6) {
+        errorSound.play();
+        yield put({ type: 'LOCK_FAIL' });
+        return;
+    }
+    if (payload === Config.password) {
         lockSound.play();
         yield put({ type: 'LOCK_SUCCESS' });
     } else {
@@ -134,6 +164,7 @@ export default function* rootSaga() {
         watchUnlockFail(),
         watchStartLock(),
         watchLockSuccess(),
-        watchLockFail()
+        watchLockFail(),
+        watchStartServiceWork()
     ])
 }

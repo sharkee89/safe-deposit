@@ -26,7 +26,10 @@ const Config = {
     screenLocked: {
         LOCK: 'Locked',
         UNLOCK: 'Unlocked'
-    }
+    },
+    serviceUrl: 'https://9w4qucosgf.execute-api.eu-central-1.amazonaws.com/default/CR-JS_team_M02a?code=',
+    password: '123456',
+    serviceCode: '000000'
 }
 
 export default Config;

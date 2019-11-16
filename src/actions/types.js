@@ -13,3 +13,4 @@ export const UNLOCK_FAIL = 'UNLOCK_FAIL';
 export const LOCK_SUCCESS = 'LOCK_SUCCESS';
 export const LOCK_FAIL = 'LOCK_FAIL';
 export const START_LOCK_ASYNC = 'START_LOCK_ASYNC';
+export const START_SERVICE = 'START_SERVICE';

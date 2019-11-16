@@ -17,20 +17,28 @@ class Key extends Component {
             this.props.screen.status !== Config.screenStatus.UNLOCK
         ) {
             if (value === 'L') {
-                this.btnSound.play();
-                store.dispatch({ type: 'START_LOCK_ASYNC', payload: this.props.screen.status });
-                store.dispatch({ type: 'STOP_BACKGROUND_SYNC' });
+                if (this.props.screen.locked === Config.screenLocked.UNLOCK) {
+                    this.btnSound.play();
+                    store.dispatch({ type: 'START_LOCK_ASYNC', payload: this.props.screen.status });
+                    store.dispatch({ type: 'STOP_BACKGROUND_SYNC' });
+                }
                 return;
             }
-            let passValue = isNaN(this.props.screen.status) ?
-                value : this.props.screen.status += value.toString();
-            if (passValue.length > 6) {
-
-            } else {
+            let passValue = isNaN(this.props.screen.status) ? value : this.props.screen.status += value.toString();
+            if (this.props.screen.serviceMode) {
                 this.btnSound.play();
                 store.dispatch({ type: 'STOP_BACKGROUND_SYNC' });
                 store.dispatch({ type: 'CHANGE_STATUS_ASYNC', payload: passValue });
                 store.dispatch({ type: 'START_IDLE_TIMING' });
+            } else {
+                if (passValue.length > 6) {
+
+                } else {
+                    this.btnSound.play();
+                    store.dispatch({ type: 'STOP_BACKGROUND_SYNC' });
+                    store.dispatch({ type: 'CHANGE_STATUS_ASYNC', payload: passValue });
+                    store.dispatch({ type: 'START_IDLE_TIMING' });
+                }
             }
         }
     }
