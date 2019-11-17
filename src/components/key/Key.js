@@ -19,7 +19,7 @@ class Key extends Component {
             if (value === 'L') {
                 if (this.props.screen.locked === Config.screenLocked.UNLOCK) {
                     this.btnSound.play();
-                    store.dispatch({ type: 'START_LOCK_ASYNC', payload: this.props.screen.status });
+                    store.dispatch({ type: 'START_LOCK_ASYNC', payload: this.props.screen.status.substr(0, 6) });
                     store.dispatch({ type: 'STOP_BACKGROUND_SYNC' });
                 }
                 return;

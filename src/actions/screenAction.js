@@ -7,7 +7,6 @@ export const getScreenInit = () => dispatch => {
 }
 
 export const changeStatus = (value) => dispatch => {
-    console.log(`${value} in action`);
     dispatch({
         type: CHANGE_STATUS,
         payload: value
