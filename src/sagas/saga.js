@@ -84,13 +84,7 @@ function* processInput({ payload }) {
         yield put({ type: 'START_SERVICE' });
         return;
     }
-    if (payload === Config.password) {
-        lockSound.play();
-        yield put({ type: 'UNLOCK_SUCCESS' });
-    } else {
-        errorSound.play();
-        yield put({ type: 'UNLOCK_FAIL' });
-    }
+    yield call(checkPassword, [payload, 'UNLOCK_SUCCESS', 'LOCK_FAIL']);
 }
 
 function* watchProcessInput() {
@@ -98,9 +92,7 @@ function* watchProcessInput() {
 }
 
 function* unlockSuccess() {
-    yield delay(1500);
-    yield put({type: 'CHANGE_LOCK', payload: Config.screenLocked.UNLOCK});
-    yield put({type: 'GO_IDLE'});
+    yield call(lock, [true, Config.screenLocked.UNLOCK]);
 }
 
 function* watchUnlockSuccess() {
@@ -108,12 +100,21 @@ function* watchUnlockSuccess() {
 }
 
 function* unlockFail() {
-    yield delay(1500);
-    yield put({type: 'GO_IDLE'});
+    yield call(lock, [false, Config.screenLocked.UNLOCK]);
 }
 
 function* watchUnlockFail() {
     yield takeEvery('UNLOCK_FAIL', unlockFail);
+}
+
+function* checkPassword(payload) {
+    if (payload[0] === Config.password) {
+        lockSound.play();
+        yield put({ type: payload[1] });
+    } else {
+        errorSound.play();
+        yield put({ type: payload[2] });
+    }
 }
 
 function* startLock({ payload }) {
@@ -123,36 +124,35 @@ function* startLock({ payload }) {
         yield put({ type: 'LOCK_FAIL' });
         return;
     }
-    if (payload === Config.password) {
-        lockSound.play();
-        yield put({ type: 'LOCK_SUCCESS' });
-    } else {
-        errorSound.play();
-        yield put({ type: 'LOCK_FAIL' });
-    }
+    yield call(checkPassword, [payload, 'LOCK_SUCCESS', 'LOCK_FAIL']);
 }
 
 function* watchStartLock() {
     yield takeEvery('START_LOCK_ASYNC', startLock)
 }
 
-function* lockSuccess() {
-    yield delay(1500);
-    yield put({type: 'CHANGE_LOCK', payload: Config.screenLocked.LOCK});
-    yield put({type: 'GO_IDLE'});
-}
-
 function* watchLockSuccess() {
     yield takeEvery('LOCK_SUCCESS', lockSuccess);
 }
 
-function* lockFail() {
-    yield delay(1500);
-    yield put({type: 'GO_IDLE'});
-}
-
 function* watchLockFail() {
     yield takeEvery('LOCK_FAIL', lockFail);
+}
+
+function* lockSuccess() {
+    yield call(lock, [true, Config.screenLocked.LOCK]);
+}
+
+function* lockFail() {
+    yield call(lock, [false, Config.screenLocked.LOCK]);
+}
+
+function* lock(params) {
+    yield delay(1500);
+    if (params[0]) {
+        yield put({type: 'CHANGE_LOCK', payload: params[1]});
+    }
+    yield put({type: 'GO_IDLE'});
 }
 
 export default function* rootSaga() {
