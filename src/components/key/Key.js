@@ -1,15 +1,44 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { changeStatus } from '../../actions/screenAction';
 import store from '../../store/store';
-import './Key.scss';
 import Config from '../../config/config';
-import soundFile from '../../audio/button.mp3';
+import { changeStatus } from '../../actions/screenAction';
 import { isStatusNumber } from '../../helper/utils';
+import './Key.scss';
+import soundFile from '../../audio/button.mp3';
 
 class Key extends Component {
 
     btnSound = new Audio(soundFile);
+
+    dispatchSetPassword() {
+        store.dispatch({ type: 'START_SET_PASSWORD'});
+        store.dispatch({ type: 'STOP_BACKGROUND_SYNC' });
+    }
+
+    dispatchLockAsync(code) {
+        store.dispatch({ type: 'START_LOCK_ASYNC', payload: code});
+        store.dispatch({ type: 'STOP_BACKGROUND_SYNC' });
+    }
+
+    process(passValue) {
+        this.btnSound.play();
+        store.dispatch({ type: 'STOP_BACKGROUND_SYNC' });
+        store.dispatch({ type: 'CHANGE_STATUS_ASYNC', payload: passValue });
+        store.dispatch({ type: 'START_IDLE_TIMING' });
+    }
+
+    lockPress() {
+        this.btnSound.play();
+        const lengthStr = this.props.screen.status.length > 6 ? 6 : this.props.screen.status.length;
+        const code = this.props.screen.status.substr(0, lengthStr);
+        if (code === Config.setPasswordCode) {
+            this.dispatchSetPassword();            
+        } else if (this.props.screen.locked === Config.screenLocked.UNLOCK) {
+            this.dispatchLockAsync(code);            
+        }
+        return;
+    }
 
     changeStatus(value) {
         if (
@@ -18,32 +47,13 @@ class Key extends Component {
             this.props.screen.status !== Config.screenStatus.UNLOCK
         ) {
             if (value === 'L') {
-                this.btnSound.play();
-                const lengthStr = this.props.screen.status.length > 6 ? 6 : this.props.screen.status.length;
-                if (this.props.screen.status.substr(0, lengthStr) === Config.setPasswordCode) {
-                    store.dispatch({ type: 'START_SET_PASSWORD'});
-                    store.dispatch({ type: 'STOP_BACKGROUND_SYNC' });
-                } else if (this.props.screen.locked === Config.screenLocked.UNLOCK) {
-                    store.dispatch({ type: 'START_LOCK_ASYNC', payload: this.props.screen.status.substr(0, lengthStr)});
-                    store.dispatch({ type: 'STOP_BACKGROUND_SYNC' });
-                }
-                return;
+                this.lockPress();
             }
             let passValue = isStatusNumber(this.props.screen.status) ? value : this.props.screen.status += value.toString();
-            if (this.props.screen.serviceMode || this.props.screen.setPassword) {
-                this.btnSound.play();
-                store.dispatch({ type: 'STOP_BACKGROUND_SYNC' });
-                store.dispatch({ type: 'CHANGE_STATUS_ASYNC', payload: passValue });
-                store.dispatch({ type: 'START_IDLE_TIMING' });
+            if (!this.props.screen.serviceMode) {
+                if (passValue.length > 6) {} else {this.process(passValue)}
             } else {
-                if (passValue.length > 6) {
-
-                } else {
-                    this.btnSound.play();
-                    store.dispatch({ type: 'STOP_BACKGROUND_SYNC' });
-                    store.dispatch({ type: 'CHANGE_STATUS_ASYNC', payload: passValue });
-                    store.dispatch({ type: 'START_IDLE_TIMING' });
-                }
+                this.process(passValue);
             }
         }
     }

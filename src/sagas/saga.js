@@ -52,7 +52,7 @@ function* bgSync() {
             yield delay(1000)
         }
     } finally {
-        // if (yield cancelled())
+
     }
 }
 

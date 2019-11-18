@@ -12,4 +12,3 @@ export const changeStatus = (value) => dispatch => {
         payload: value
     });
 }
-
