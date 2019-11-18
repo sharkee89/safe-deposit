@@ -9,7 +9,7 @@ class Screen extends Component {
                 <div className="screen__lseg">
                     {this.props.screen.locked}
                 </div>
-                <div className={"screen__mseg" + (this.props.screen.status.length >= 13 && this.props.screen.status.length < 17 ? ' screen__mseg--small' : this.props.screen.status.length >= 17 ? ' screen__mseg--extra-small' : '')}>
+                <div className={"screen__mseg" + (this.props.screen.status.length >= 10 && this.props.screen.status.length < 17 ? ' screen__mseg--small' : this.props.screen.status.length >= 17 ? ' screen__mseg--extra-small' : '')}>
                     {this.props.screen.status}
                 </div>
             </div>
