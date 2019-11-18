@@ -5,7 +5,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 25%;
+  width: 35%;
   margin: 0 auto;
   background: $panel-body;
   border-radius: 5px;
@@ -17,20 +17,20 @@
 }
 @media only screen and (max-width: 1776px) {
   .safe-deposit {
-    width: 35%;
-  }
-}
-@media only screen and (max-width: 1200px) {
-  .safe-deposit {
     width: 45%;
   }
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1280px) {
   .safe-deposit {
     width: 55%;
   }
 }
-@media only screen and (max-width: 648px) {
+@media only screen and (max-width: 905px) {
+  .safe-deposit {
+    width: 55%;
+  }
+}
+@media only screen and (max-width: 720px) {
   .safe-deposit {
     width: 90%;
   }

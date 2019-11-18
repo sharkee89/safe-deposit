@@ -5,11 +5,11 @@ import './Screen.scss';
 class Screen extends Component {
     render() {
         return (
-            <div className={(this.props.screen.on ? 'screen screen--on' : 'screen screen--off')}>
+            <div className={"screen " + (this.props.screen.on ? ' screen--on' : ' screen--off')}>
                 <div className="screen__lseg">
                     {this.props.screen.locked}
                 </div>
-                <div className="screen__mseg">
+                <div className={"screen__mseg" + (this.props.screen.status.length >= 13 && this.props.screen.status.length < 20 ? ' screen__mseg--small' : this.props.screen.status.length > 20 ? ' screen__mseg--extra-small' : '')}>
                     {this.props.screen.status}
                 </div>
             </div>
