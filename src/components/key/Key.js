@@ -5,6 +5,7 @@ import store from '../../store/store';
 import './Key.scss';
 import Config from '../../config/config';
 import soundFile from '../../audio/button.mp3';
+import { isStatusNumber } from '../../helper/utils';
 
 class Key extends Component {
 
@@ -17,16 +18,19 @@ class Key extends Component {
             this.props.screen.status !== Config.screenStatus.UNLOCK
         ) {
             if (value === 'L') {
-                if (this.props.screen.locked === Config.screenLocked.UNLOCK) {
-                    this.btnSound.play();
-                    const lengthStr = this.props.screen.status.length > 6 ? 6 : this.props.screen.status.length;
-                    store.dispatch({ type: 'START_LOCK_ASYNC', payload: this.props.screen.status.substr(0, lengthStr) });
+                this.btnSound.play();
+                const lengthStr = this.props.screen.status.length > 6 ? 6 : this.props.screen.status.length;
+                if (this.props.screen.status.substr(0, lengthStr) === Config.setPasswordCode) {
+                    store.dispatch({ type: 'START_SET_PASSWORD'});
+                    store.dispatch({ type: 'STOP_BACKGROUND_SYNC' });
+                } else if (this.props.screen.locked === Config.screenLocked.UNLOCK) {
+                    store.dispatch({ type: 'START_LOCK_ASYNC', payload: this.props.screen.status.substr(0, lengthStr)});
                     store.dispatch({ type: 'STOP_BACKGROUND_SYNC' });
                 }
                 return;
             }
-            let passValue = isNaN(this.props.screen.status) ? value : this.props.screen.status += value.toString();
-            if (this.props.screen.serviceMode) {
+            let passValue = isStatusNumber(this.props.screen.status) ? value : this.props.screen.status += value.toString();
+            if (this.props.screen.serviceMode || this.props.screen.setPassword) {
                 this.btnSound.play();
                 store.dispatch({ type: 'STOP_BACKGROUND_SYNC' });
                 store.dispatch({ type: 'CHANGE_STATUS_ASYNC', payload: passValue });

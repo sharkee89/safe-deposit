@@ -21,14 +21,17 @@ const Config = {
         LOCK: 'Locking...',
         UNLOCK: 'Unlocking...',
         SERVICE: 'Service',
-        VALIDATE: 'Validating...'
+        VALIDATE: 'Validating...',
+        SET_PASSWORD: 'Enter new password',
+        SET_PASSWORD_SUCCESS: 'Setting new password...',
+        SET_PASSWORD_FAIL: 'Password changing error'
     },
     screenLocked: {
         LOCK: 'Locked',
         UNLOCK: 'Unlocked'
     },
     serviceUrl: 'https://9w4qucosgf.execute-api.eu-central-1.amazonaws.com/default/CR-JS_team_M02a?code=',
-    password: '123456',
+    setPasswordCode: '******',
     serviceCode: '000000'
 }
 

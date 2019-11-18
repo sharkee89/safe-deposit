@@ -11,9 +11,11 @@ import {
     LOCK_SUCCESS,
     LOCK_FAIL,
     START_LOCK_ASYNC,
-    START_SERVICE
+    START_SERVICE,
+    START_SET_PASSWORD,
+    SET_PASSWORD_SUCCESS,
+    SET_PASSWORD_FAIL
 } from '../actions/types';
-import { statement } from '@babel/template';
 
 const initialState = {
     locked: Config.screenLocked.LOCK,
@@ -21,6 +23,7 @@ const initialState = {
     on: false,
     progress: false,
     serviceMode: false,
+    setPassword: false,
     idleTime: 0,
     submitTime: 0
 }
@@ -46,6 +49,8 @@ export default (state = initialState, action) => {
                 on: false,
                 progress: false,
                 status: Config.screenStatus.READY,
+                screenMode: false,
+                setPassword: false,
                 idleTime: 0,
                 submitTime: 0
             }
@@ -68,13 +73,15 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 status: Config.screenStatus.UNLOCK,
-                serviceMode: false
+                serviceMode: false,
+                setPassword: false
             }
         case UNLOCK_FAIL:
             return {
                 ...state,
                 status: Config.screenStatus.ERROR,
-                serviceMode: false
+                serviceMode: false,
+                setPassword: false
             }
         case START_LOCK_ASYNC:
             return {
@@ -95,7 +102,25 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 status: Config.screenStatus.SERVICE,
-                serviceMode: true
+                serviceMode: true,
+                setPassword: false
+            }
+        case START_SET_PASSWORD:
+            return {
+                ...state,
+                status: Config.screenStatus.SET_PASSWORD,
+                serviceMode: false,
+                setPassword: true
+            }
+        case SET_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                status: Config.screenStatus.SET_PASSWORD_SUCCESS
+            }
+        case SET_PASSWORD_FAIL:
+            return {
+                ...state,
+                status: Config.screenStatus.SET_PASSWORD_FAIL
             }
         default:
             return state;
