@@ -19,7 +19,7 @@ import {
 
 const initialState = {
     locked: Config.screenLocked.LOCK,
-    status: Config.screenStatus.VALIDATE,
+    status: Config.screenStatus.READY,
     on: false,
     progress: false,
     serviceMode: false,
