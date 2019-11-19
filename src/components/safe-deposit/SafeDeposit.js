@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import Screen from '../screen/Screen';
 import Keypad from '../keypad/Keypad';
-import './SafeDeposit.scss';
 import Config from '../../config/config';
+import './SafeDeposit.scss';
 
 export default class SafeDeposit extends Component {
     state = {

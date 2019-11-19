@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import store from '../../store/store';
 import Config from '../../config/config';
-import { changeStatus } from '../../actions/screenAction';
 import { isStatusNumber } from '../../helper/utils';
 import './Key.scss';
 import soundFile from '../../audio/button.mp3';
@@ -69,4 +68,4 @@ const mappStateToProps = state => ({
     screen: state.screen
 })
 
-export default connect(mappStateToProps, { changeStatus })(Key);
+export default connect(mappStateToProps, { })(Key);
