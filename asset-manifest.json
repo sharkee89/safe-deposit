@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/safedeposit/static/css/main.f551923b.chunk.css",
-    "main.js": "/safedeposit/static/js/main.1876b5ec.chunk.js",
-    "main.js.map": "/safedeposit/static/js/main.1876b5ec.chunk.js.map",
-    "runtime-main.js": "/safedeposit/static/js/runtime-main.f14d4338.js",
-    "runtime-main.js.map": "/safedeposit/static/js/runtime-main.f14d4338.js.map",
-    "static/js/2.66ae90ea.chunk.js": "/safedeposit/static/js/2.66ae90ea.chunk.js",
-    "static/js/2.66ae90ea.chunk.js.map": "/safedeposit/static/js/2.66ae90ea.chunk.js.map",
-    "index.html": "/safedeposit/index.html",
-    "precache-manifest.15b4f4ae3e17cfc8f53ece11a56d1325.js": "/safedeposit/precache-manifest.15b4f4ae3e17cfc8f53ece11a56d1325.js",
-    "service-worker.js": "/safedeposit/service-worker.js",
-    "static/css/main.f551923b.chunk.css.map": "/safedeposit/static/css/main.f551923b.chunk.css.map",
-    "static/media/button.mp3": "/safedeposit/static/media/button.111a056b.mp3",
-    "static/media/error.mp3": "/safedeposit/static/media/error.dd18d3ba.mp3",
-    "static/media/unlock.wav": "/safedeposit/static/media/unlock.a9294e7b.wav"
+    "main.css": "/safe-deposit/static/css/main.f551923b.chunk.css",
+    "main.js": "/safe-deposit/static/js/main.00446b2a.chunk.js",
+    "main.js.map": "/safe-deposit/static/js/main.00446b2a.chunk.js.map",
+    "runtime-main.js": "/safe-deposit/static/js/runtime-main.83555420.js",
+    "runtime-main.js.map": "/safe-deposit/static/js/runtime-main.83555420.js.map",
+    "static/js/2.66ae90ea.chunk.js": "/safe-deposit/static/js/2.66ae90ea.chunk.js",
+    "static/js/2.66ae90ea.chunk.js.map": "/safe-deposit/static/js/2.66ae90ea.chunk.js.map",
+    "index.html": "/safe-deposit/index.html",
+    "precache-manifest.2dcb4d2295bef5ca4c5f41e145498c03.js": "/safe-deposit/precache-manifest.2dcb4d2295bef5ca4c5f41e145498c03.js",
+    "service-worker.js": "/safe-deposit/service-worker.js",
+    "static/css/main.f551923b.chunk.css.map": "/safe-deposit/static/css/main.f551923b.chunk.css.map",
+    "static/media/button.mp3": "/safe-deposit/static/media/button.111a056b.mp3",
+    "static/media/error.mp3": "/safe-deposit/static/media/error.dd18d3ba.mp3",
+    "static/media/unlock.wav": "/safe-deposit/static/media/unlock.a9294e7b.wav"
   },
   "entrypoints": [
-    "static/js/runtime-main.f14d4338.js",
+    "static/js/runtime-main.83555420.js",
     "static/js/2.66ae90ea.chunk.js",
     "static/css/main.f551923b.chunk.css",
-    "static/js/main.1876b5ec.chunk.js"
+    "static/js/main.00446b2a.chunk.js"
   ]
 }
